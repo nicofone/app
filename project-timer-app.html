@@ -6,7 +6,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Design Studio Project Timer</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><style>input:focus { outline: none; }</style></head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><style>input:focus { outline: none; }</style>
+</head>
 <body class="bg-gradient-to-b from-[#E60000] to-[#B80000] text-white font-sans min-h-screen p-4">
 <div class="text-center py-6">
 <h1 class="text-4xl font-bold mb-8">Design Studio Project Timer</h1>
@@ -86,60 +87,61 @@ Register
 </table>
 <button class="mx-auto mt-20 mb-20 flex items-center gap-2 bg-black hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="clearTable" onclick="clearTableRows()"><i class="fa fa-trash"></i> Clear all</button></div>
 <script>
-    let timers = [0, 0];
-    let intervals = [null, null];
+let timers = [0, 0];
+let intervals = [null, null];
 
-    function updateDisplay(index) {
-      const minutes = String(Math.floor(timers[index - 1] / 60)).padStart(2, '0');
-      const seconds = String(timers[index - 1] % 60).padStart(2, '0');
-      document.getElementById('timer' + index).textContent = `${minutes}:${seconds}`;
-    }
-
-    function startTimer(index) {
-      if (intervals[index - 1]) return;
-      intervals[index - 1] = setInterval(() => {
-        timers[index - 1]++;
-        updateDisplay(index);
-      }, 1000);
-    }
-
-    function pauseTimer(index) {
-      clearInterval(intervals[index - 1]);
-      intervals[index - 1] = null;
-    }
-
-    function resetTimer(index) {
-      pauseTimer(index);
-      timers[index - 1] = 0;
-      updateDisplay(index);
-    }
-
-    function saveTitle(index) {
-      const title = document.getElementById('title' + index).value;
-      localStorage.setItem('title' + index, title);
-    }
-
-    function registerTime(index) {
-      const title = document.getElementById('title' + index).value || 'Untitled';
-      const activity = document.getElementById('activity' + index).value;
-      const time = document.getElementById('timer' + index).textContent;
-      const row = document.createElement('tr');
-      row.className = "border-b border-white";
-      row.innerHTML = `<td class="py-1">${title}</td><td>${activity}</td><td>${time}</td>`;
-      document.getElementById('logTable').appendChild(row);
-    }
-  </script>
-<script>
-function clearTableRows() {
-    const tbody = document.getElementById('logTable');
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
-    }
-    // Reset both timers to 0 and update display
-    timers[0] = 0;
-    timers[1] = 0;
-    updateDisplay(1);
-    updateDisplay(2);
+function updateDisplay(index) {
+  const hours = String(Math.floor(timers[index - 1] / 3600)).padStart(2, '0');
+  const minutes = String(Math.floor((timers[index - 1] % 3600) / 60)).padStart(2, '0');
+  const seconds = String(timers[index - 1] % 60).padStart(2, '0');
+  document.getElementById('timer' + index).textContent = `${hours}:${minutes}:${seconds}`;
 }
-</script><footer class="bg-black text-white text-center p-4 text-sm fixed bottom-0 left-0 right-0 w-full"><p>Developed by Nico with Copilot</p></footer></body>
+
+function startTimer(index) {
+  if (intervals[index - 1]) return;
+  intervals[index - 1] = setInterval(() => {
+    timers[index - 1]++;
+    updateDisplay(index);
+  }, 1000);
+}
+
+function pauseTimer(index) {
+  clearInterval(intervals[index - 1]);
+  intervals[index - 1] = null;
+}
+
+function resetTimer(index) {
+  pauseTimer(index);
+  timers[index - 1] = 0;
+  updateDisplay(index);
+}
+
+function saveTitle(index) {
+  const title = document.getElementById('title' + index).value;
+  localStorage.setItem('title' + index, title);
+}
+
+function registerTime(index) {
+  const title = document.getElementById('title' + index).value || 'Untitled';
+  const activity = document.getElementById('activity' + index).value;
+  const time = document.getElementById('timer' + index).textContent;
+  const row = document.createElement('tr');
+  row.className = "border-b border-white";
+  row.innerHTML = `<td class="py-1">${title}</td><td>${activity}</td><td>${time}</td>`;
+  document.getElementById('logTable').appendChild(row);
+}
+
+function clearTableRows() {
+  const tbody = document.getElementById('logTable');
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
+  // Reset both timers to 0 and update display
+  timers = 0;
+  timers = 0;
+  updateDisplay(1);
+  updateDisplay(2);
+}
+</script>
+<footer class="bg-black text-white text-center p-4 text-sm fixed bottom-0 left-0 right-0 w-full"><p>Developed by Nico with Copilot</p></footer></body>
 </html>
