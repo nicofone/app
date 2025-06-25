@@ -222,7 +222,7 @@ table.md-table tr:not(:last-child) td {
 .clear-input-btn {
   position: absolute;
   right: 4px;
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
   background: transparent;
   border: none;
